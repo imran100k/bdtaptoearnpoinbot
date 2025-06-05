@@ -26,6 +26,11 @@
     <button class="bg-blue-600 text-white px-4 py-2 rounded">Upload</button>
   </section>
 
+  <!-- Monetag SDK Ads (Your provided script) -->
+  <div class="text-center my-4">
+    <script src='//libtl.com/sdk.js' data-zone='9417101' data-sdk='show_9417101'></script>
+  </div>
+
   <!-- Video Feed -->
   <section class="p-6 mt-4">
     <h2 class="text-xl font-semibold mb-4">🔥 Latest Videos</h2>
@@ -43,7 +48,7 @@
         <div class="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-700">🔒 Locked Video</div>
         <h3 class="font-bold">VIP Football Highlight</h3>
         <p class="text-sm text-gray-500">🔒 Requires 50 Coins</p>
-        <button class="bg-yellow-500 mt-2 px-3 py-1 text-white rounded">Unlock</button>
+        <button onclick="showAd()" class="bg-yellow-500 mt-2 px-3 py-1 text-white rounded">Unlock</button>
       </div>
     </div>
   </section>
@@ -51,9 +56,11 @@
   <!-- Footer -->
   <footer class="text-center text-sm text-gray-400 p-4 mt-6">© 2025 Prime Video. All rights reserved.</footer>
 
-  <!-- Monetag Ads (example) -->
-  <script type="text/javascript">
-    // Monetag ad script here (manual setup)
+  <script>
+    function showAd() {
+      alert("🔓 Watching Ad to Unlock...");
+      // Monetag SDK (above) will handle the ad display automatically
+    }
   </script>
 
 </body>
