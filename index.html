@@ -1,173 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BanglaTube</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #0e0e10;
-      color: #fff;
-    }
-    .tab-btn.active {
-      background-color: #1f2937;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body class="flex flex-col min-h-screen">
-
-  <!-- Header -->
-  <header class="p-4 bg-gray-900 text-white flex justify-between items-center">
-    <h1 class="text-xl font-bold">📺 BanglaTube</h1>
-    <div class="text-sm">🪙 Coins: <span id="coin">100</span></div>
-  </header>
-
-  <!-- Tabs -->
-  <div class="bg-gray-800 text-white flex justify-around text-sm">
-    <button class="tab-btn py-2 flex-1 text-center active" onclick="showTab('home', event)">🏠 Home</button>
-    <button class="tab-btn py-2 flex-1 text-center" onclick="showTab('profile', event)">👤 Profile</button>
+<div class="w-full max-w-5xl mx-auto mt-6 bg-gray-900 rounded overflow-hidden">
+  
+  <!-- Channel Banner -->
+  <div class="h-32 bg-gradient-to-r from-blue-600 to-indigo-600 relative">
+    <img src="https://i.pravatar.cc/100?img=7"
+         class="w-24 h-24 rounded-full border-4 border-white absolute -bottom-12 left-6" />
   </div>
 
-  <!-- Main Content -->
-  <main class="flex-1 overflow-y-auto p-4 space-y-6">
+  <!-- Channel Info -->
+  <div class="pt-16 px-6 pb-4 border-b border-gray-700">
+    <h2 class="text-2xl font-semibold">BanglaCreator</h2>
+    <p class="text-sm text-gray-400">1.5K subscribers • 22 videos</p>
+  </div>
 
-    <!-- Home Tab -->
-    <div id="homeTab">
-      <!-- Free Video -->
-      <div class="bg-gray-800 p-3 rounded-lg">
-        <video controls class="w-full rounded">
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-        </video>
-        <p class="mt-2 font-semibold">🎬 Funny Cat Video</p>
-        <p class="text-sm text-gray-400">Free</p>
-      </div>
+  <!-- Tab Menu (Videos / Playlists / About) -->
+  <div class="flex space-x-6 px-6 py-2 text-sm border-b border-gray-800">
+    <button class="text-white border-b-2 border-red-500 pb-1">Videos</button>
+    <button class="text-gray-400 hover:text-white">Playlists</button>
+    <button class="text-gray-400 hover:text-white">About</button>
+  </div>
 
-      <!-- Locked Video -->
-      <div class="bg-gray-800 p-3 rounded-lg" id="locked-video">
-        <div class="relative w-full h-48 rounded overflow-hidden" id="video-container">
-          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" class="w-full h-full object-cover" id="thumbnail" />
-          <div id="overlay" class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white text-lg">
-            🔒 Locked Video  
-            <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock 50🪙</button>
-          </div>
-          <video id="lockedVid" controls class="w-full h-full absolute top-0 left-0 hidden">
-            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <p class="mt-2 font-semibold text-white">🎬 Secret Music</p>
-        <p class="text-sm text-yellow-400">Unlock for 50 Coins</p>
-      </div>
+  <!-- Upload Button -->
+  <div class="px-6 py-4">
+    <label class="text-sm text-gray-300 block mb-1">Upload New Video</label>
+    <input type="file" id="videoInput" class="bg-gray-800 text-white p-2 rounded w-full text-sm" accept="video/*" />
+    <button onclick="uploadVideo()" class="mt-2 bg-red-600 px-4 py-2 rounded text-white">Upload</button>
+  </div>
 
-      <!-- Uploaded Videos will appear here -->
-      <div id="uploadedVideosHome"></div>
+  <!-- Video Gallery -->
+  <div class="px-6 pb-6">
+    <h3 class="text-lg font-semibold mb-4">Your Videos</h3>
+    <div id="videoGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <!-- Uploaded videos will appear here -->
     </div>
+  </div>
+</div>
 
-    <!-- Profile Tab -->
-    <div id="profileTab" class="hidden space-y-6">
-      <!-- Profile Info -->
-      <div class="bg-gray-800 p-4 rounded flex items-center space-x-4">
-        <img src="https://i.pravatar.cc/100?img=3" alt="Avatar" class="w-16 h-16 rounded-full border-2 border-yellow-500" />
-        <div>
-          <h2 class="text-xl font-semibold">🚀 @BanglaUser</h2>
-          <p class="text-sm text-gray-300">1.2K Subscribers</p>
-        </div>
-      </div>
+<script>
+  function uploadVideo() {
+    const input = document.getElementById('videoInput');
+    const file = input.files[0];
+    if (!file) return alert("Please choose a video.");
 
-      <!-- Upload Video -->
-      <div class="bg-gray-800 p-4 rounded">
-        <label class="block mb-2 text-sm text-gray-300">🎞️ Upload a new video:</label>
-        <input type="file" accept="video/*" id="videoInput" class="mb-3 bg-gray-700 p-2 w-full rounded text-sm"/>
-        <button onclick="uploadVideo()" class="bg-green-500 text-black px-4 py-2 rounded">⬆️ Upload</button>
-      </div>
-
-      <!-- Your Videos -->
-      <div>
-        <h3 class="text-lg font-semibold mb-2">📂 Your Uploaded Videos</h3>
-        <div id="uploadedVideosProfile" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-center p-4">
-    <button onclick="earnCoin()" class="bg-blue-600 text-white px-4 py-2 rounded">💰 Earn Coins</button>
-  </footer>
-
-  <!-- Monetag Ads -->
-  <script src="//libtl.com/sdk.js" data-zone="9417101" data-sdk="show_9417101"></script>
-
-  <!-- Script -->
-  <script>
-    let coins = 100;
-
-    function updateCoinDisplay() {
-      document.getElementById('coin').innerText = coins;
-    }
-
-    function earnCoin() {
-      alert("🎉 Ad Triggered! You earned 10 coins!");
-      coins += 10;
-      updateCoinDisplay();
-    }
-
-    function unlockVideo(cost) {
-      if (coins >= cost) {
-        coins -= cost;
-        updateCoinDisplay();
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("thumbnail").style.display = "none";
-        document.getElementById("lockedVid").classList.remove("hidden");
-      } else {
-        alert("😞 Not enough coins!");
-      }
-    }
-
-    function showTab(tab, event) {
-      document.getElementById('homeTab').classList.add('hidden');
-      document.getElementById('profileTab').classList.add('hidden');
-      document.getElementById(tab + 'Tab').classList.remove('hidden');
-
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      if (event) event.target.classList.add('active');
-    }
-
-    function uploadVideo() {
-      const fileInput = document.getElementById('videoInput');
-      const file = fileInput.files[0];
-      if (!file) return alert("⚠️ Please select a video");
-
-      const url = URL.createObjectURL(file);
-      
-      // Profile view
-      const videoCard = document.createElement('div');
-      videoCard.className = "bg-gray-700 p-2 rounded";
-      videoCard.innerHTML = `
-        <video controls class="w-full h-40 rounded object-cover">
-          <source src="${url}" type="${file.type}" />
-        </video>
-        <p class="mt-2 font-semibold text-white truncate">📤 ${file.name}</p>
-        <p class="text-xs text-gray-400">Just now • 0 views</p>
-      `;
-      document.getElementById('uploadedVideosProfile').appendChild(videoCard);
-
-      // Home view
-      const homeVideo = document.createElement('div');
-      homeVideo.className = "bg-gray-800 p-3 rounded-lg";
-      homeVideo.innerHTML = `
-        <video controls class="w-full rounded">
-          <source src="${url}" type="${file.type}" />
-        </video>
-        <p class="mt-2 font-semibold">🎬 ${file.name}</p>
-        <p class="text-sm text-gray-400">Uploaded</p>
-      `;
-      document.getElementById('uploadedVideosHome').appendChild(homeVideo);
-
-      fileInput.value = "";
-      alert("✅ Video uploaded!");
-    }
-  </script>
-</body>
-</html>
+    const url = URL.createObjectURL(file);
+    const card = document.createElement('div');
+    card.className = "bg-gray-800 p-2 rounded";
+    card.innerHTML = `
+      <video class="w-full h-40 object-cover rounded" controls>
+        <source src="${url}" type="${file.type}">
+      </video>
+      <p class="mt-2 text-white font-medium truncate">${file.name}</p>
+      <p class="text-xs text-gray-400">0 views • Just now</p>
+    `;
+    document.getElementById('videoGallery').appendChild(card);
+    input.value = '';
+    alert("✅ Uploaded!");
+  }
+</script>
