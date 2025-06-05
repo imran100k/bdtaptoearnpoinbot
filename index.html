@@ -3,63 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prime Video</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <title>Ad Test Page</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
 </head>
-<body class="bg-gray-100">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-blue-600">🎥 Prime Video</h1>
-    <div>
-      <span class="text-gray-600 mr-2">Coins: <strong>120</strong></span>
-      <button class="bg-yellow-400 px-4 py-1 rounded">Earn Coins</button>
-    </div>
-  </header>
+  <h1>🧪 Monetag Ad Trigger Test</h1>
+  <p>Click the button below to test if your Monetag ads show up.</p>
 
-  <!-- Upload Section -->
-  <section class="p-6 bg-white mt-4 mx-4 rounded shadow">
-    <h2 class="text-xl font-semibold mb-4">📤 Upload a Video</h2>
-    <input type="text" placeholder="Video Title" class="w-full border p-2 mb-2"/>
-    <textarea placeholder="Description" class="w-full border p-2 mb-2"></textarea>
-    <input type="file" class="mb-2"/>
-    <button class="bg-blue-600 text-white px-4 py-2 rounded">Upload</button>
-  </section>
+  <button onclick="triggerAd()">🎯 Show Ad</button>
 
-  <!-- Monetag SDK Ads (Your provided script) -->
-  <div class="text-center my-4">
-    <script src='//libtl.com/sdk.js' data-zone='9417101' data-sdk='show_9417101'></script>
-  </div>
-
-  <!-- Video Feed -->
-  <section class="p-6 mt-4">
-    <h2 class="text-xl font-semibold mb-4">🔥 Latest Videos</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="bg-white p-4 shadow rounded">
-        <video class="w-full h-48 bg-black mb-2" controls>
-          <source src="sample.mp4" type="video/mp4" />
-        </video>
-        <h3 class="font-bold">My First Upload</h3>
-        <p class="text-sm text-gray-500">👁️ 234 views • 🕒 2 mins</p>
-        <button class="bg-green-500 mt-2 px-3 py-1 text-white rounded">Watch</button>
-      </div>
-
-      <div class="bg-white p-4 shadow rounded">
-        <div class="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-700">🔒 Locked Video</div>
-        <h3 class="font-bold">VIP Football Highlight</h3>
-        <p class="text-sm text-gray-500">🔒 Requires 50 Coins</p>
-        <button onclick="showAd()" class="bg-yellow-500 mt-2 px-3 py-1 text-white rounded">Unlock</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="text-center text-sm text-gray-400 p-4 mt-6">© 2025 Prime Video. All rights reserved.</footer>
+  <!-- Monetag SDK Script -->
+  <script src="https://libtl.com/sdk.js" data-zone="9417101" data-sdk="show_9417101"></script>
 
   <script>
-    function showAd() {
-      alert("🔓 Watching Ad to Unlock...");
-      // Monetag SDK (above) will handle the ad display automatically
+    function triggerAd() {
+      alert("Triggering Ad... Wait 2 seconds.");
+      setTimeout(() => {
+        // dummy interaction — let SDK handle the rest
+        window.open("about:blank", "_blank");
+      }, 1000);
     }
   </script>
 
