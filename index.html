@@ -1,82 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TapSwap Clone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #111827;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    h1 {
-      margin-top: 10px;
-      font-size: 2em;
-    }
-    #coins {
-      font-size: 2.5em;
-      margin: 10px 0;
-    }
-    #tap-btn {
-      background-color: #10b981;
-      border: none;
-      padding: 30px 60px;
-      border-radius: 50%;
-      font-size: 2em;
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
-      transition: transform 0.1s;
-    }
-    #tap-btn:active {
-      transform: scale(0.95);
-    }
-    .monetag-ad {
-      margin-top: 30px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prime Video</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="bg-gray-100">
 
-  <h1>👆 Tap to Earn</h1>
-  <div>Welcome, <span id="user"></span></div>
+  <!-- Header -->
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-600">🎥 Prime Video</h1>
+    <div>
+      <span class="text-gray-600 mr-2">Coins: <strong>120</strong></span>
+      <button class="bg-yellow-400 px-4 py-1 rounded">Earn Coins</button>
+    </div>
+  </header>
 
-  <div id="coins">🪙 0</div>
-  <button id="tap-btn">TAP</button>
+  <!-- Upload Section -->
+  <section class="p-6 bg-white mt-4 mx-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">📤 Upload a Video</h2>
+    <input type="text" placeholder="Video Title" class="w-full border p-2 mb-2"/>
+    <textarea placeholder="Description" class="w-full border p-2 mb-2"></textarea>
+    <input type="file" class="mb-2"/>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded">Upload</button>
+  </section>
 
-  <div class="monetag-ad">
-    <!-- Insert your Monetag ad tag or iframe here -->
-    <iframe src="https://example.com/ad" width="320" height="100" style="border:none;"></iframe>
-  </div>
+  <!-- Video Feed -->
+  <section class="p-6 mt-4">
+    <h2 class="text-xl font-semibold mb-4">🔥 Latest Videos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white p-4 shadow rounded">
+        <video class="w-full h-48 bg-black mb-2" controls>
+          <source src="sample.mp4" type="video/mp4" />
+        </video>
+        <h3 class="font-bold">My First Upload</h3>
+        <p class="text-sm text-gray-500">👁️ 234 views • 🕒 2 mins</p>
+        <button class="bg-green-500 mt-2 px-3 py-1 text-white rounded">Watch</button>
+      </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+      <div class="bg-white p-4 shadow rounded">
+        <div class="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-700">🔒 Locked Video</div>
+        <h3 class="font-bold">VIP Football Highlight</h3>
+        <p class="text-sm text-gray-500">🔒 Requires 50 Coins</p>
+        <button class="bg-yellow-500 mt-2 px-3 py-1 text-white rounded">Unlock</button>
+      </div>
+    </div>
+  </section>
 
-    // Show user name
-    const initData = tg.initDataUnsafe?.user;
-    document.getElementById("user").innerText = initData?.first_name || "Player";
+  <!-- Footer -->
+  <footer class="text-center text-sm text-gray-400 p-4 mt-6">© 2025 Prime Video. All rights reserved.</footer>
 
-    // Coin Logic
-    let coins = 0;
-    const coinDisplay = document.getElementById("coins");
-    document.getElementById("tap-btn").addEventListener("click", () => {
-      coins++;
-      coinDisplay.innerText = `🪙 ${coins}`;
-
-      // TODO: Send to backend
-      // fetch("/api/updateCoins", { method: "POST", body: JSON.stringify({ user: tg.initDataUnsafe.user.id, coins }) });
-    });
-
-    // Optional: save coins to backend every X taps
+  <!-- Monetag Ads (example) -->
+  <script type="text/javascript">
+    // Monetag ad script here (manual setup)
   </script>
 
 </body>
