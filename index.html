@@ -6,9 +6,9 @@
   <title>BanglaTube</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    body { background-color: #0e0e10; color: #fff; }
-    .locked-overlay {
-      @apply absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-xl rounded;
+    body {
+      background-color: #0e0e10;
+      color: #fff;
     }
   </style>
 </head>
@@ -21,8 +21,8 @@
   </header>
 
   <!-- Video Feed -->
-  <main class="flex-1 overflow-y-auto p-4 space-y-4">
-    
+  <main class="flex-1 overflow-y-auto p-4 space-y-6">
+
     <!-- Free Video -->
     <div class="bg-gray-800 p-3 rounded-lg">
       <video controls class="w-full rounded">
@@ -33,31 +33,39 @@
     </div>
 
     <!-- Locked Video -->
-    <div class="bg-gray-800 p-3 rounded-lg relative" id="locked-video">
-      <div id="video-container" class="relative">
-        <video id="lockedVid" controls class="w-full rounded hidden">
+    <div class="bg-gray-800 p-3 rounded-lg" id="locked-video">
+      <div class="relative w-full h-48 rounded overflow-hidden" id="video-container">
+        <!-- Thumbnail Image -->
+        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" class="w-full h-full object-cover" id="thumbnail" />
+
+        <!-- Locked Overlay -->
+        <div id="overlay" class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white text-lg">
+          🔒 Locked Video  
+          <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock 50🪙</button>
+        </div>
+
+        <!-- Video Player -->
+        <video id="lockedVid" controls class="w-full h-full absolute top-0 left-0 hidden">
           <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
         </video>
-        <div id="overlay" class="locked-overlay">
-          🔒 Locked Video
-        </div>
       </div>
-      <p class="mt-2 font-semibold">🎬 Secret Music</p>
+
+      <!-- Title & Info -->
+      <p class="mt-2 font-semibold text-white">🎬 Secret Music</p>
       <p class="text-sm text-yellow-400">Unlock for 50 Coins</p>
-      <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock</button>
     </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-center p-3 text-sm text-gray-400">
-    <button onclick="earnCoin()" class="bg-blue-600 text-white px-4 py-1 rounded">💰 Earn Coins</button>
+  <footer class="bg-gray-900 text-center p-4">
+    <button onclick="earnCoin()" class="bg-blue-600 text-white px-4 py-2 rounded">💰 Earn Coins</button>
   </footer>
 
-  <!-- Monetag Script -->
+  <!-- Monetag Ads -->
   <script src="https://libtl.com/sdk.js" data-zone="9417101" data-sdk="show_9417101"></script>
 
-  <!-- Script -->
+  <!-- JS Script -->
   <script>
     let coins = 100;
 
@@ -66,7 +74,7 @@
     }
 
     function earnCoin() {
-      alert("🎉 Ad Triggered. 10 Coins Added!");
+      alert("🎉 Ad Triggered! You earned 10 coins!");
       coins += 10;
       updateCoinDisplay();
     }
@@ -76,6 +84,7 @@
         coins -= cost;
         updateCoinDisplay();
         document.getElementById("overlay").style.display = "none";
+        document.getElementById("thumbnail").style.display = "none";
         document.getElementById("lockedVid").classList.remove("hidden");
       } else {
         alert("😞 Not enough coins!");
