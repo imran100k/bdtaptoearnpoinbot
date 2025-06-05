@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tap to Earn Coins</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #111827, #1f2937);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .coin-counter {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+
+    .tap-btn {
+      background: #10b981;
+      border: none;
+      border-radius: 9999px;
+      padding: 30px 50px;
+      font-size: 1.5em;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .tap-btn:active {
+      transform: scale(0.96);
+    }
+
+    .boosts {
+      margin-top: 20px;
+      font-size: 0.9em;
+    }
+
+    .ad-section {
+      margin: 30px 0;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🚀 Tap & Earn</h2>
+
+    <div class="coin-counter">
+      🪙 Coins: <span id="coinCount">0</span>
+    </div>
+
+    <button class="tap-btn" onclick="handleTap()">👆 Tap</button>
+
+    <div class="boosts">
+      Combo x<span id="combo">1</span> | Speed Boost: <span id="boost">0%</span>
+    </div>
+
+    <div class="ad-section">
+      <!-- Monetag Ads Integration -->
+      <p style="margin-top: 20px;">Sponsored</p>
+      <!-- Place Monetag JS tag here -->
+      <iframe src="https://example.com/ad-placeholder" width="300" height="250" style="border:none;"></iframe>
+    </div>
+
+    <div class="footer">
+      Invite friends to earn bonus coins!<br/>
+      &copy; 2025 TapEarn WebApp
+    </div>
+  </div>
+
+  <script>
+    let coins = 0;
+    let combo = 1;
+
+    function handleTap() {
+      combo = Math.min(combo + 0.1, 3); // combo multiplier
+      let earned = Math.floor(1 * combo);
+      coins += earned;
+
+      document.getElementById('coinCount').innerText = coins;
+      document.getElementById('combo').innerText = combo.toFixed(1);
+    }
+
+    // Optional: Auto-decay combo every few seconds
+    setInterval(() => {
+      if (combo > 1) {
+        combo -= 0.1;
+        document.getElementById('combo').innerText = combo.toFixed(1);
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
