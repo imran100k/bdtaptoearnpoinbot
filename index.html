@@ -10,6 +10,10 @@
       background-color: #0e0e10;
       color: #fff;
     }
+    .tab-btn.active {
+      background-color: #1f2937;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -20,41 +24,58 @@
     <div class="text-sm">🪙 Coins: <span id="coin">100</span></div>
   </header>
 
-  <!-- Video Feed -->
+  <!-- Tabs -->
+  <div class="bg-gray-800 text-white flex justify-around text-sm">
+    <button class="tab-btn py-2 flex-1 text-center active" onclick="showTab('home')">🏠 Home</button>
+    <button class="tab-btn py-2 flex-1 text-center" onclick="showTab('profile')">👤 Profile</button>
+  </div>
+
+  <!-- Main Content -->
   <main class="flex-1 overflow-y-auto p-4 space-y-6">
 
-    <!-- Free Video -->
-    <div class="bg-gray-800 p-3 rounded-lg">
-      <video controls class="w-full rounded">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-      </video>
-      <p class="mt-2 font-semibold">🎬 Funny Cat Video</p>
-      <p class="text-sm text-gray-400">Free</p>
-    </div>
+    <!-- Home Tab -->
+    <div id="homeTab">
 
-    <!-- Locked Video -->
-    <div class="bg-gray-800 p-3 rounded-lg" id="locked-video">
-      <div class="relative w-full h-48 rounded overflow-hidden" id="video-container">
-        <!-- Thumbnail Image -->
-        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" class="w-full h-full object-cover" id="thumbnail" />
-
-        <!-- Locked Overlay -->
-        <div id="overlay" class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white text-lg">
-          🔒 Locked Video  
-          <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock 50🪙</button>
-        </div>
-
-        <!-- Video Player -->
-        <video id="lockedVid" controls class="w-full h-full absolute top-0 left-0 hidden">
-          <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+      <!-- Free Video -->
+      <div class="bg-gray-800 p-3 rounded-lg">
+        <video controls class="w-full rounded">
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
         </video>
+        <p class="mt-2 font-semibold">🎬 Funny Cat Video</p>
+        <p class="text-sm text-gray-400">Free</p>
       </div>
 
-      <!-- Title & Info -->
-      <p class="mt-2 font-semibold text-white">🎬 Secret Music</p>
-      <p class="text-sm text-yellow-400">Unlock for 50 Coins</p>
+      <!-- Locked Video -->
+      <div class="bg-gray-800 p-3 rounded-lg" id="locked-video">
+        <div class="relative w-full h-48 rounded overflow-hidden" id="video-container">
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" class="w-full h-full object-cover" id="thumbnail" />
+          <div id="overlay" class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white text-lg">
+            🔒 Locked Video  
+            <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock 50🪙</button>
+          </div>
+          <video id="lockedVid" controls class="w-full h-full absolute top-0 left-0 hidden">
+            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <p class="mt-2 font-semibold text-white">🎬 Secret Music</p>
+        <p class="text-sm text-yellow-400">Unlock for 50 Coins</p>
+      </div>
+
+      <!-- Uploaded Videos Will Show Here -->
+      <div id="uploadedVideos"></div>
     </div>
 
+    <!-- Profile Tab -->
+    <div id="profileTab" class="hidden">
+      <div class="bg-gray-800 p-4 rounded">
+        <h2 class="text-lg font-semibold mb-4">👤 Your Profile</h2>
+
+        <label class="block mb-2">🎞️ Upload Your Video:</label>
+        <input type="file" accept="video/*" id="videoInput" class="mb-4 bg-gray-700 p-2 w-full rounded"/>
+
+        <button onclick="uploadVideo()" class="bg-green-500 text-black px-4 py-2 rounded">⬆️ Upload</button>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -65,7 +86,7 @@
   <!-- Monetag Ads -->
   <script src="https://libtl.com/sdk.js" data-zone="9417101" data-sdk="show_9417101"></script>
 
-  <!-- JS Script -->
+  <!-- Script -->
   <script>
     let coins = 100;
 
@@ -89,6 +110,37 @@
       } else {
         alert("😞 Not enough coins!");
       }
+    }
+
+    function showTab(tab) {
+      document.getElementById('homeTab').classList.add('hidden');
+      document.getElementById('profileTab').classList.add('hidden');
+      document.getElementById(tab + 'Tab').classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function uploadVideo() {
+      const fileInput = document.getElementById('videoInput');
+      const file = fileInput.files[0];
+      if (!file) return alert("⚠️ Please select a video");
+
+      const url = URL.createObjectURL(file);
+      const videoDiv = document.createElement('div');
+      videoDiv.className = "bg-gray-800 p-3 rounded-lg";
+
+      videoDiv.innerHTML = `
+        <video controls class="w-full rounded">
+          <source src="${url}" type="${file.type}" />
+        </video>
+        <p class="mt-2 font-semibold">📤 Your Uploaded Video</p>
+        <p class="text-sm text-gray-400">Local Upload</p>
+      `;
+
+      document.getElementById('uploadedVideos').appendChild(videoDiv);
+      fileInput.value = "";
+      alert("✅ Video uploaded!");
     }
   </script>
 
