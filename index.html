@@ -7,6 +7,9 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body { background-color: #0e0e10; color: #fff; }
+    .locked-overlay {
+      @apply absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-xl rounded;
+    }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -20,7 +23,7 @@
   <!-- Video Feed -->
   <main class="flex-1 overflow-y-auto p-4 space-y-4">
     
-    <!-- Unlocked Video -->
+    <!-- Free Video -->
     <div class="bg-gray-800 p-3 rounded-lg">
       <video controls class="w-full rounded">
         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
@@ -30,8 +33,15 @@
     </div>
 
     <!-- Locked Video -->
-    <div class="bg-gray-800 p-3 rounded-lg">
-      <div class="w-full h-40 bg-gray-700 flex items-center justify-center text-gray-400 rounded">🔒 Locked Video</div>
+    <div class="bg-gray-800 p-3 rounded-lg relative" id="locked-video">
+      <div id="video-container" class="relative">
+        <video id="lockedVid" controls class="w-full rounded hidden">
+          <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+        </video>
+        <div id="overlay" class="locked-overlay">
+          🔒 Locked Video
+        </div>
+      </div>
       <p class="mt-2 font-semibold">🎬 Secret Music</p>
       <p class="text-sm text-yellow-400">Unlock for 50 Coins</p>
       <button onclick="unlockVideo(50)" class="mt-2 px-4 py-1 bg-yellow-500 text-black rounded">Unlock</button>
@@ -51,17 +61,22 @@
   <script>
     let coins = 100;
 
-    function earnCoin() {
-      alert("🎉 Watch ad to earn coins!");
-      coins += 10;
+    function updateCoinDisplay() {
       document.getElementById('coin').innerText = coins;
+    }
+
+    function earnCoin() {
+      alert("🎉 Ad Triggered. 10 Coins Added!");
+      coins += 10;
+      updateCoinDisplay();
     }
 
     function unlockVideo(cost) {
       if (coins >= cost) {
         coins -= cost;
-        document.getElementById('coin').innerText = coins;
-        alert("🎉 Video Unlocked!");
+        updateCoinDisplay();
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("lockedVid").classList.remove("hidden");
       } else {
         alert("😞 Not enough coins!");
       }
